@@ -22,3 +22,8 @@ $item = $client->items->addItem($item);
 echo 'Success!' . PHP_EOL;
 echo 'Item: ' . json_encode($item->toArray()) . PHP_EOL;
 
+echo 'Expecting 3 Items.' . PHP_EOL;
+$items = $client->items->getItems();
+if (count($items === 3)) {
+    echo 'Success!' . PHP_EOL;
+}
