@@ -3,12 +3,16 @@
 namespace MockAPI;
 
 /**
+ * ATTENTION: don´t modify this file.
+ *
  * Class API
+ * Simple "API" which returns array as responses.
  * @package MockAPI
  */
 class API
 {
     /**
+     * list of items which are "stored" on the api.
      * @var array
      */
     protected $items = [
@@ -24,6 +28,9 @@ class API
         ],
     ];
 
+    /**
+     * @var int $lastId will be incremented when a item is added.
+     */
     protected $lastId = 2;
 
     /**
@@ -32,7 +39,7 @@ class API
     public function get_token()
     {
         return [
-            'token' => 'secret-access-token', // string
+            'token' => 'secret-access-token', // string the access token for the api
             'expires_at' => time() + 180 // integer/unix-timestamp = token is 3 minutes valid
         ];
     }
@@ -57,7 +64,7 @@ class API
 
     /**
      * @param string $token
-     * @param array $data
+     * @param array $data needs to contain a "item" with "price" and "title".
      * @return array
      * @throws \Exception
      */
@@ -85,4 +92,8 @@ class API
             'success' => false,
         ];
     }
+
+    // users endpoints
+    // watchlist endpoints
+    // ...
 }
