@@ -85,6 +85,7 @@ class Client
      * @param array $data
      * @return array
      * @throws \Psr\Cache\InvalidArgumentException
+     * @throws \Exception
      */
     public function get(string $path, array $data = [])
     {
@@ -98,6 +99,7 @@ class Client
      * @param array $data
      * @return array
      * @throws \Psr\Cache\InvalidArgumentException
+     * @throws \Exception
      */
     public function post(string $path, array $data = [])
     {
