@@ -8,7 +8,7 @@ The goal (= testcases) is be able to
   
  The SDK should also fulfill following requirements.
  
- * ObjectOriented codestyle.
+ * OOP CodeStyle.
  * Usage of PHP7 features.
  * Caching of the Token (more information below)
  * Hints: 
@@ -25,12 +25,12 @@ The CacheItem should expire 60 seconds before the actual token expires.
 The API returns all fields as string.
 Please cast them into the correct types which are also described in the API.
 
-Please handle post/get endpoints separate. 
+The API has arrays as return values to keep it simple.
 
 GET:
-  * get_token
-  * get_items
+  * token - returns an valid access_token
+  * items - returns a list of items.
   
 POST:
-  * post_add_item
+  * add_item - accepts as data an item, returns on success the added item.
   

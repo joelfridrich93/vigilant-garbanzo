@@ -4,6 +4,7 @@ namespace Client;
 
 use Client\API\Authentication;
 use Client\API\Items;
+use Client\Model\Token;
 use MockAPI\API;
 use Psr\Cache\CacheItemPoolInterface;
 
@@ -14,7 +15,6 @@ use Psr\Cache\CacheItemPoolInterface;
 class Client
 {
     private const TOKEN_CACHE_KEY = 'token_cache';
-    private const TOKEN_EXPIRES_AT_BUFFER = 10;
 
     /**
      * @var \MockAPI\API
@@ -56,21 +56,26 @@ class Client
 
     /**
      * @throws \Psr\Cache\InvalidArgumentException
+     * @throws \Exception
      */
     public function ensureValidToken()
     {
-        if (!$this->token || $this->token->getExpiresAt() < time() - self::TOKEN_EXPIRES_AT_BUFFER) {
+        if (!$this->token || !$this->token->isValid()) {
             $cacheItem = $this->cachePool->getItem(self::TOKEN_CACHE_KEY);
             if (!$cacheItem->isHit()) {
-                $this->token = $this->authentication->getToken();
-
+                $token = $this->authentication->getToken();
                 $this->cachePool->save($cacheItem
-                    ->set($this->token)
+                    ->set($token)
                     ->expiresAt(
                         (new \DateTime())
-                            ->setTimestamp($this->token->getExpiresAt() - self::TOKEN_EXPIRES_AT_BUFFER)
+                            ->setTimestamp($token->getExpiresAt() - Token::TOKEN_EXPIRES_AT_BUFFER)
                     )
                 );
+            }
+
+            $this->token = $cacheItem->get();
+            if (!$this->token->isValid()) {
+                throw new \Exception('Could not ensure an valid access token.');
             }
         }
     }

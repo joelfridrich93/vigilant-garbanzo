@@ -8,6 +8,8 @@ namespace Client\Model;
  */
 class Token
 {
+    public const TOKEN_EXPIRES_AT_BUFFER = 10;
+
     /**
      * @var string
      */
@@ -43,6 +45,14 @@ class Token
     public function getExpiresAt(): int
     {
         return $this->expiresAt;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isValid(): bool
+    {
+        return $this->getExpiresAt() - self::TOKEN_EXPIRES_AT_BUFFER > time();
     }
 
     /**
