@@ -10,7 +10,7 @@ The goal (= testcases) is be able to
   
  The SDK should also fulfill following requirements.
  
- * OOP CodeStyle.
+ * OOP code style.
  * Usage of PHP7 features.
  * Caching of the Token (more information below)
  * Hints: 
@@ -24,17 +24,17 @@ You can get a valid access token with the `get_token` endpoint.
 This token needs to be cached. For caching use the `\Cache\Adapter\PHPArray\ArrayCachePool` which implements the `Psr\Cache\CacheItemPoolInterface`.
 The CacheItem should expire 60 seconds before the actual token expires.
 
-The API returns all fields as string.
-Please cast them into the correct types which are also described in the API.
+The Mocked API has arrays as return values to keep it simple and returns all fields as strings.
+Please cast the fields from the api responses into the correct types. (Definition is in `\MockAPI\API`)
 
-The API has arrays as return values to keep it simple.
-
-GET:
+GET Endpoints:
   * token - returns an valid access_token
   * items - returns a list of items.
   
-POST:
+POST Endpoints:
   * add_item - accepts as data an item, returns on success the added item.
+  
+ For detailed information please look into `\MockAPI\API`.
  
  ## Products of All Integers Test
  

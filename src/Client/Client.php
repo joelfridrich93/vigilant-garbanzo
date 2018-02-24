@@ -64,12 +64,10 @@ class Client
             $cacheItem = $this->cachePool->getItem(self::TOKEN_CACHE_KEY);
             if (!$cacheItem->isHit()) {
                 $token = $this->authentication->getToken();
-                $this->cachePool->save($cacheItem
-                    ->set($token)
-                    ->expiresAt(
-                        (new \DateTime())
-                            ->setTimestamp($token->getExpiresAt() - Token::TOKEN_EXPIRES_AT_BUFFER)
-                    )
+                $this->cachePool->save(
+                    $cacheItem
+                        ->set($token)
+                        ->expiresAt(new \DateTime('@' . $token->getExpiresAt() - Token::TOKEN_EXPIRES_AT_BUFFER))
                 );
             }
 
@@ -81,30 +79,30 @@ class Client
     }
 
     /**
-     * @param string $path
+     * @param string $endpoint
      * @param array $data
      * @return array
      * @throws \Psr\Cache\InvalidArgumentException
      * @throws \Exception
      */
-    public function get(string $path, array $data = [])
+    public function get(string $endpoint, array $data = [])
     {
         $this->ensureValidToken();
 
-        return $this->api->{'get_' . $path}($this->token->getToken(), $data);
+        return $this->api->{'get_' . $endpoint}($this->token->getToken(), $data);
     }
 
     /**
-     * @param string $path
+     * @param string $endpoint
      * @param array $data
      * @return array
      * @throws \Psr\Cache\InvalidArgumentException
      * @throws \Exception
      */
-    public function post(string $path, array $data = [])
+    public function post(string $endpoint, array $data = [])
     {
         $this->ensureValidToken();
 
-        return $this->api->{'post_' . $path}($this->token->getToken(), $data);
+        return $this->api->{'post_' . $endpoint}($this->token->getToken(), $data);
     }
 }
