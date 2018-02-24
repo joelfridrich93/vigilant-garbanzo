@@ -58,7 +58,7 @@ class Client
      * @throws \Psr\Cache\InvalidArgumentException
      * @throws \Exception
      */
-    public function ensureValidToken()
+    public function ensureValidToken(): void
     {
         if (!$this->token || !$this->token->isValid()) {
             $cacheItem = $this->cachePool->getItem(self::TOKEN_CACHE_KEY);
@@ -87,7 +87,7 @@ class Client
      * @throws \Psr\Cache\InvalidArgumentException
      * @throws \Exception
      */
-    public function get(string $endpoint, array $data = [])
+    public function get(string $endpoint, array $data = []): array
     {
         $this->ensureValidToken();
 
@@ -101,7 +101,7 @@ class Client
      * @throws \Psr\Cache\InvalidArgumentException
      * @throws \Exception
      */
-    public function post(string $endpoint, array $data = [])
+    public function post(string $endpoint, array $data = []): array
     {
         $this->ensureValidToken();
 
