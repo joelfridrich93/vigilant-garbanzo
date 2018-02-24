@@ -1,4 +1,6 @@
-# SDK-Test
+# Applicant Tests
+
+## SDK-Test
 
 For this test you need to write your own SDK which handles all endpoints descriped in `\MockAPI\API`.
 
@@ -33,4 +35,8 @@ GET:
   
 POST:
   * add_item - accepts as data an item, returns on success the added item.
-  
+ 
+ ## Products of All Integers Test
+ 
+ Please follow the Instructions in `products_of_all_ints.php`.
+ Commit your solution in this file.
