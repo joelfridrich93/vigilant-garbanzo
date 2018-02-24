@@ -11,6 +11,8 @@ namespace MockAPI;
  */
 class API
 {
+    private const TOKEN = 'secret-access-token';
+
     /**
      * list of items which are "stored" on the api.
      * @var array
@@ -34,12 +36,34 @@ class API
     protected $lastId = 2;
 
     /**
+     * @param string $endpoint
+     * @param string $token
+     * @param array $data
      * @return array
      */
-    public function get_token()
+    public function get(string $endpoint, string $token, array $data): array
+    {
+        return $this->{'get_' . $endpoint}($token, $data);
+    }
+
+    /**
+     * @param string $endpoint
+     * @param string $token
+     * @param array $data
+     * @return array
+     */
+    public function post(string $endpoint, string $token, array $data): array
+    {
+        return $this->{'post_' . $endpoint}($token, $data);
+    }
+
+    /**
+     * @return array
+     */
+    public function get_token(): array
     {
         return [
-            'token' => 'secret-access-token', // string the access token for the api
+            'token' => self::TOKEN, // string the access token for the api
             'expires_at' => time() + 180 // integer/unix-timestamp = token is 3 minutes valid
         ];
     }
@@ -50,9 +74,9 @@ class API
      * @return array
      * @throws \Exception
      */
-    public function get_items(string $token, array $data = [])
+    protected function get_items(string $token, array $data = []): array
     {
-        if ($token !== 'secret-access-token') {
+        if ($token !== self::TOKEN) {
             throw new \Exception('Unauthorized.');
         }
 
@@ -68,9 +92,9 @@ class API
      * @return array
      * @throws \Exception
      */
-    public function post_add_item(string $token, array $data): array
+    protected function post_add_item(string $token, array $data): array
     {
-        if ($token !== 'secret-access-token') {
+        if ($token !== self::TOKEN) {
             throw new \Exception('Unauthorized.');
         }
 

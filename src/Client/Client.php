@@ -67,7 +67,9 @@ class Client
                 $this->cachePool->save(
                     $cacheItem
                         ->set($token)
-                        ->expiresAt(new \DateTime('@' . $token->getExpiresAt() - Token::TOKEN_EXPIRES_AT_BUFFER))
+                        ->expiresAt(
+                            (new \DateTime)->setTimestamp($token->getExpiresAt() - Token::TOKEN_EXPIRES_AT_BUFFER)
+                        )
                 );
             }
 
@@ -89,7 +91,7 @@ class Client
     {
         $this->ensureValidToken();
 
-        return $this->api->{'get_' . $endpoint}($this->token->getToken(), $data);
+        return $this->api->get($endpoint, $this->token->getToken(), $data);
     }
 
     /**
@@ -103,6 +105,6 @@ class Client
     {
         $this->ensureValidToken();
 
-        return $this->api->{'post_' . $endpoint}($this->token->getToken(), $data);
+        return $this->api->post($endpoint, $this->token->getToken(), $data);
     }
 }
