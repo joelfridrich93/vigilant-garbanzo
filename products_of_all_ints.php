@@ -16,10 +16,10 @@
 function getProductsOfAllIntsExceptAtIndex(array $numbers): array
 {
     $products = [];
-    foreach ($numbers as $key => $number) {
-        $numbers[$key] = 1;
-        $products[$key] = array_product($numbers);
-        $numbers[$key] = $number;
+    foreach ($numbers as $index => $number) {
+        $numbers[$index] = 1;
+        $products[$index] = array_product($numbers);
+        $numbers[$index] = $number;
     }
 
     return $products;
